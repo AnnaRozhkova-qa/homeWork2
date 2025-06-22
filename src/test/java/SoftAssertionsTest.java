@@ -15,23 +15,24 @@ public class SoftAssertionsTest {
         Configuration.pageLoadStrategy = "eager";
     }
     @Test
-    void junitExampleFind() {
+    void junitExampleFindTest() {
         open("selenide/selenide");
         $("#wiki-tab").click();
-        $("#wiki-body").shouldHave(text ("Soft assertions"));
+        $("#wiki-body").shouldHave(text("Soft assertions"));
         $("a[href='/selenide/selenide/wiki/SoftAssertions']").click();
 
-
-        var content = $(".gollum-markdown-content");
-
-        // Проверяем ключевые части кода по отдельности
-        content.shouldHave(text("@ExtendWith({SoftAssertsExtension.class})"));
-        content.shouldHave(text("class Tests {"));
-        content.shouldHave(text("Configuration.assertionMode = SOFT;"));
-        content.shouldHave(text("$(\"#first\").should(visible).click();"));
-        content.shouldHave(text("$(\"#second\").should(visible).click();"));
-        content.shouldHave(text("{"));
-        content.shouldHave(text("{"));
-
+        $("#wiki-body").shouldHave(text(
+                "@ExtendWith({SoftAssertsExtension.class})\n" +
+                        "class Tests {\n" +
+                        "  @Test\n" +
+                        "  void test() {\n" +
+                        "    Configuration.assertionMode = SOFT;\n" +
+                        "    open(\"page.html\");\n" +
+                        "\n" +
+                        "    $(\"#first\").should(visible).click();\n" +
+                        "    $(\"#second\").should(visible).click();\n" +
+                        "  }\n" +
+                        "}"
+        ));
     }
 }
